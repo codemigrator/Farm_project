@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}
+search a content if you want
+{% endblock %}
+{% block content %}
+<div class=" container text-center my_search_text">
+    <p><b>You have searched for :"{{query}}"</b></p>
+</div>
+<div class="container">
+    <div class="row mx-auto">
+
+    {% for product in products %}
+            <div class="my-bottom-margin col-9 col-sm-12 col-md-4 col-lg-4">
+                <div class="card text-center">
+            <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}" class="card-img-top"></a>
+        <div class="card-body">
+        <h4>{{product.name}}</h4>
+        <p>{{product.price}}</p>
+        </div>
+        </div>
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="row max-auto">
+    <p class="text-center">0 results founded</p>
+</div>
+{% endfor %}
+
+{% endblock %}

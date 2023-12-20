@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription|truncatewords:150 %}
+    {% if category %}
+    {{ category.description}}
+{ % else %}
+Welcome to ABC store where you can buy
+{% endif %}
+{% endblock %}
+{% block title %}
+{% if category %}
+{{ category.name}}-ABC store
+{% else %}
+see our new collections -aBc store
+{% endif %}
+{% endblock %}
+{% block content %}
+{% if category %}
+<div>
+    <p><a href="{% url 'farm_main:allprodcat' %}">{{category.name}}home page
+
+    </a></p>
+</div>
+{% endif %}
+<div>
+    {% if category %}
+</div>
+<div>
+        <div>
+        <h3>{{category.name}}&nbsp;Category</h3>
+        <img style="width:474px;height:355px;" class="shadow" src="{{category.image.url}}"><br>
+        <p style="margin-top:10px;">{{category.description}}</p>
+
+   </div>
+    {% else %}
+<div>
+<img src="{% static 'img/banner.png' %}" class="shadow" alt="our products" style="width:100%">
+</div>
+<div class="text-center">
+    <h1 class="my-4">
+        <u>Our Products Collections</u>
+    </h1>
+</div>
+{% endif %}
+<div class="container ">
+    <div class="row mx-auto">
+
+    {% for product in products.object_list %}
+            <div class="my-bottom-margin col-9 col-sm-12 col-md-4 col-lg-4">
+                <div class="card text-center my-3 ms-5 shadow" style="width:280px;">
+            <a href="{{product.get_url}}"><img src="{{product.image.url}}" alt="{{product.name}}" class="card-img-top" style="width:280px;height:300px;"></a>
+        <div class="card-body">
+        <h4>{{product.name}}</h4>
+        <p>{{product.price}}</p>
+        </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm shadow mx-1 {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+
+
+        </div>
+            {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}
+
+
